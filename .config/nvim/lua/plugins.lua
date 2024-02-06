@@ -43,6 +43,11 @@ return require('lazy').setup({
           -- packer won't install dependencies of this for some reason
           'williamboman/mason.nvim',
         },
+        config = function()
+          require("mason-lspconfig").setup {
+              ensure_installed = { "pyright", "rust_analyzer" },
+          }
+        end
       },
       -- autocomplete
       { 'hrsh7th/nvim-cmp',

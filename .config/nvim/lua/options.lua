@@ -10,3 +10,8 @@ o.listchars = {
 }
 
 -- eol = '¬'
+
+vim.cmd 'set expandtab'
+vim.cmd 'set tabstop=2'
+vim.cmd 'set shiftwidth=2'
+vim.g.markdown_recommended_style = 0
