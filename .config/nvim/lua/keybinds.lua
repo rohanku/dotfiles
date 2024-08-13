@@ -7,6 +7,9 @@ vim.keymap.set('n', '<leader>pd', '<cmd>Telescope diagnostics<cr>')
 -- sidebar toggle
 vim.keymap.set('n', '<leader>s', function() require("nvim-tree.api").tree.toggle() end)
 
+-- FZF
+vim.keymap.set('n', '<space><space>', '<cmd>FZF<cr>')
+
 -- tab settings
 vim.keymap.set('n', '<leader>t', ':set et sw=0 ts=')
 vim.keymap.set('n', '<leader>tt', '<cmd>set et sw=0 ts=4<cr>')

@@ -27,18 +27,7 @@ return require('lazy').setup({
   'tpope/vim-fugitive',
 
   -- fuzzy finder
-  {
-  "ibhagwan/fzf-lua",
-  -- optional for icon support
-  dependencies = { 
-    "nvim-tree/nvim-web-devicons",
-    { "junegunn/fzf", build = "./install --bin" }
-  },
-  config = function()
-    -- calling `setup` is optional for customization
-    require("fzf-lua").setup({})
-  end
-  },
+  { "junegunn/fzf", build = "./install --bin" },
 
   -- language servers
   { -- automatically download lang servers
