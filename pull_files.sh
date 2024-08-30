@@ -5,6 +5,7 @@ REPO_DIR=$( cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P )
 rm -rf $REPO_DIR/.config/nvim
 mkdir -p $REPO_DIR/.config
 cp -ri ~/.config/nvim $REPO_DIR/.config/nvim
+cp -ri ~/.config/alacritty $REPO_DIR/.config/alacritty
 
 # tmux config
 cp ~/.tmux.conf $REPO_DIR/.tmux.conf
