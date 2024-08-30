@@ -211,10 +211,12 @@ return require('lazy').setup({
   -- sidebar
   {
     'nvim-tree/nvim-tree.lua',
+    version = "*",
+    lazy = false,
     dependencies = {
       'nvim-tree/nvim-web-devicons', -- optional, for file icons
     },
-    version = 'nightly', -- optional, updated every week. (see issue #1193)
+    -- version = 'nightly', -- optional, updated every week. (see issue #1193)
     config = function()
       require("nvim-tree").setup({
         filters = {

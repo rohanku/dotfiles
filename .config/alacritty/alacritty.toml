@@ -1,0 +1,81 @@
+live_config_reload = true
+
+[colors.bright]
+black = "#686868"
+blue = "#65bddb"
+cyan = "#9debcf"
+green = "#58c49c"
+magenta = "#f17676"
+red = "#f58c7d"
+white = "#ffffff"
+yellow = "#ffd165"
+
+[colors.normal]
+black = "#212733"
+blue = "#60b8d6"
+cyan = "#98e6ca"
+green = "#53bf97"
+magenta = "#ec7171"
+red = "#f08778"
+white = "#fafafa"
+yellow = "#fdcc60"
+
+[colors.primary]
+background = "#1f2430"
+bright_foreground = "#f28779"
+foreground = "#cbccc6"
+
+[font]
+size = 12.0
+
+[font.bold]
+family = "Roboto Mono for Powerline"
+style = "Bold"
+
+[font.bold_italic]
+family = "Roboto Mono for Powerline"
+style = "Italic"
+
+[font.glyph_offset]
+x = 0
+y = 1
+
+[font.italic]
+family = "Roboto Mono for Powerline"
+style = "Italic"
+
+[font.normal]
+family = "Roboto Mono for Powerline"
+style = "Regular"
+
+[font.offset]
+x = 0
+y = 2
+
+[[keyboard.bindings]]
+chars = '\p'
+key = "LBracket"
+mods = "Command"
+
+[[keyboard.bindings]]
+chars = '\n'
+key = "RBracket"
+mods = "Command"
+
+[[keyboard.bindings]]
+chars = "\u001E"
+key = "Key6"
+mods = "Control"
+
+[scrolling]
+history = 50000
+
+[selection]
+save_to_clipboard = true
+semantic_escape_chars = ",│`|:\"' ()[]{}<>\t"
+
+[window]
+decorations = "none"
+dynamic_padding = true
+dynamic_title = true
+startup_mode = "Windowed"
