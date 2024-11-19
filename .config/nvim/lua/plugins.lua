@@ -75,7 +75,7 @@ return require('lazy').setup({
               end,
             },
             completion = {
-              completeopt = 'menu,menuone,noinsert'
+              completeopt = 'menu,menuone,noinsert,noselect'
             },
             window = {
               -- completion = cmp.config.window.bordered(),
@@ -255,6 +255,9 @@ return require('lazy').setup({
         highlight = {
           -- `false` will disable the whole extension
           enable = true,
+          disable = function(lang, bufnr) -- Disable in large C++ buffers
+            return vim.api.nvim_buf_line_count(bufnr) > 50000
+          end,
 
           -- Setting this to true will run `:h syntax` and tree-sitter at the same time.
           -- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
