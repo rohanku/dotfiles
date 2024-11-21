@@ -82,6 +82,7 @@ return require('lazy').setup({
                 -- vim.fn["UltiSnips#Anon"](args.body) -- For `ultisnips` users.
               end,
             },
+            preselect = cmp.PreselectMode.None,
             completion = {
               completeopt = 'menu,menuone,noinsert,noselect'
             },
