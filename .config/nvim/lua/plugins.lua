@@ -48,9 +48,17 @@ return require('lazy').setup({
         },
         config = function()
           require("mason-lspconfig").setup {
-              ensure_installed = { "pyright", "rust_analyzer" },
+              ensure_installed = { "pyright" },
+              handlers = {
+                rust_analyzer = function() end
+              }
           }
         end
+      },
+      {
+        'mrcjkb/rustaceanvim',
+        version = '^5', -- Recommended
+        lazy = false, -- This plugin is already lazy
       },
       -- autocomplete
       { 'hrsh7th/nvim-cmp',
@@ -87,6 +95,7 @@ return require('lazy').setup({
               ['<C-Space>'] = cmp.mapping.complete(),
               ['<C-e>'] = cmp.mapping.abort(),
               ['<Tab>'] = cmp.mapping.select_next_item(),
+              ['<S-Tab>'] = cmp.mapping.select_prev_item(),
               ['<CR>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
             }),
             sources = cmp.config.sources({
@@ -123,46 +132,6 @@ return require('lazy').setup({
             })
           })
         end,
-      },
-      {
-        'simrat39/rust-tools.nvim',
-        config = function()
-          require("rust-tools").setup(
-            {
-              tools = {
-                runnables = {
-                  use_telescope = true,
-                },
-                inlay_hints = {
-                  auto = true,
-                  show_parameter_hints = false,
-                  parameter_hints_prefix = "",
-                  other_hints_prefix = "",
-                },
-              },
-
-              -- all the opts to send to nvim-lspconfig
-              -- these override the defaults set by rust-tools.nvim
-              -- see https://github.com/neovim/nvim-lspconfig/blob/master/CONFIG.md#rust_analyzer
-              server = {
-                -- on_attach is a callback called when the language server attachs to the buffer
-                on_attach = function(client, buffer)
-                end,
-                cmd = {'rustup', 'run', 'stable', 'rust-analyzer'},
-                settings = {
-                  -- to enable rust-analyzer settings visit:
-                  -- https://github.com/rust-analyzer/rust-analyzer/blob/master/docs/user/generated_config.adoc
-                  ["rust-analyzer"] = {
-                    -- enable clippy on save
-                    checkOnSave = {
-                      command = "clippy",
-                    },
-                  },
-                },
-              },
-            }
-          )
-        end
       }
     },
 
