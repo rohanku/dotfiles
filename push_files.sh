@@ -18,12 +18,21 @@ if test -d ~/.config/kitty; then
     mv ~/.config/kitty ~/.config/kitty-bak
     rm -r ~/.config/kitty
 fi
+if test -d ~/.tmux.conf; then
+    mv ~/.tmux.conf ~/.tmux.conf-bak
+    rm .tmux.conf
+fi
+if test -d ~/.zshrc; then
+    mv ~/.zshrc ~/.zshrc-bak
+    rm .zshrc
+fi
 
 mkdir -p ~/.config
-cp -ri $REPO_DIR/.config/nvim ~/.config/nvim
-cp -ri $REPO_DIR/.config/alacritty ~/.config/alacritty
-cp -ri $REPO_DIR/.config/zed ~/.config/zed
-cp -ri $REPO_DIR/.config/kitty ~/.config/kitty
+cp -RLi $REPO_DIR/.config/nvim ~/.config/nvim
+cp -RLi $REPO_DIR/.config/alacritty ~/.config/alacritty
+cp -RLi $REPO_DIR/.config/zed ~/.config/zed
+cp -RLi $REPO_DIR/.config/kitty ~/.config/kitty
 
 # tmux config
 cp $REPO_DIR/.tmux.conf ~/.tmux.conf
+cp $REPO_DIR/.zshrc ~/.zshrc
