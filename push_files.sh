@@ -20,11 +20,11 @@ if test -d ~/.config/kitty; then
 fi
 if test -f ~/.tmux.conf; then
     mv ~/.tmux.conf ~/.tmux.conf-bak
-    rm .tmux.conf
+    rm ~/.tmux.conf
 fi
 if test -f ~/.zshrc; then
     mv ~/.zshrc ~/.zshrc-bak
-    rm .zshrc
+    rm ~/.zshrc
 fi
 
 mkdir -p ~/.config
@@ -35,4 +35,5 @@ cp -RLi $REPO_DIR/.config/kitty ~/.config/kitty
 
 # tmux config
 cp $REPO_DIR/.tmux.conf ~/.tmux.conf
+# zsh config
 cp $REPO_DIR/.zshrc ~/.zshrc
