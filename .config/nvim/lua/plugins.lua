@@ -21,40 +21,12 @@ return require('lazy').setup({
   'tpope/vim-repeat',
   'tpope/vim-surround',
 
-  -- quotes as a textobj
-  'preservim/vim-textobj-quote',
--- git wrapper
-  'tpope/vim-fugitive',
-
   -- fuzzy finder
   { "junegunn/fzf", build = "./install --bin" },
-
-  -- language servers
-  { -- automatically download lang servers
-    'williamboman/mason.nvim',
-    config = function()
-      require('mason').setup()
-    end
-  },
 
   { -- configure lang servers
     'neovim/nvim-lspconfig',
     dependencies = {
-      -- automatic language server installation
-      { 'williamboman/mason-lspconfig.nvim',
-        dependencies = {
-          -- packer won't install dependencies of this for some reason
-          'williamboman/mason.nvim',
-        },
-        config = function()
-          require("mason-lspconfig").setup {
-              ensure_installed = { "pyright" },
-              handlers = {
-                rust_analyzer = function() end
-              }
-          }
-        end
-      },
       {
         'mrcjkb/rustaceanvim',
         version = '^5', -- Recommended
@@ -135,41 +107,6 @@ return require('lazy').setup({
         end,
       }
     },
-
-    config = function()
-      local capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities())
-      do
-        local config = vim.tbl_deep_extend('force',
-          require('metals').bare_config(),
-          { capabilities = capabilities }
-        )
-        local augrp = vim.api.nvim_create_augroup('cfg-lsp-metals', { clear = true })
-        vim.api.nvim_create_autocmd('FileType', {
-          pattern = { 'scala', 'sbt' },
-          callback = function()
-            vim.opt_local.shortmess:remove('F')
-            require('metals').initialize_or_attach(config)
-          end,
-          group = augrp,
-        })
-      end
-      require("mason-lspconfig").setup_handlers {
-        function(server_name) -- default handler
-          require('lspconfig')[server_name].setup {
-            capabilities = capabilities
-          }
-        end,
-      }
-    end,
-  },
-  -- format on save
-  {
-    "rust-lang/rust.vim",
-    ft = "rust",
-    init = function ()
-      vim.wo.signcolumn = "yes"
-      vim.g.rustfmt_autosave = 1
-    end
   },
   -- visualize lsp progress
   {
@@ -237,30 +174,6 @@ return require('lazy').setup({
         },
       }
     end
-  },
-
-  -- LaTeX
-  'lervag/vimtex',
-
-  -- null-ls
-  {
-    'jose-elias-alvarez/null-ls.nvim',
-    dependencies = { { 'nvim-lua/plenary.nvim' } },
-    config = function()
-      require("null-ls").setup({
-        sources = {
-          -- require("null-ls").builtins.diagnostics.vale,
-          require("null-ls").builtins.formatting.black,
-          require("null-ls").builtins.formatting.isort,
-        },
-      })
-    end,
-  },
-
-  -- scala does its own thing for some reason
-  {
-    'scalameta/nvim-metals',
-    dependencies = { "nvim-lua/plenary.nvim" }
   },
 })
 

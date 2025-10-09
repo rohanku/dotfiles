@@ -1,8 +1,0 @@
-font_family      family="FiraCode Nerd Font"
-bold_font        Bold
-italic_font      Light
-bold_italic_font SemiBold
-font_size        12.0
-
-background #1f2430
-foreground #cbccc6
