@@ -56,7 +56,8 @@ return require('lazy').setup({
             },
             preselect = cmp.PreselectMode.None,
             completion = {
-              completeopt = 'menu,menuone,noinsert,noselect'
+              completeopt = 'menu,menuone,noinsert,noselect',
+              keyword_length = 3
             },
             window = {
               -- completion = cmp.config.window.bordered(),

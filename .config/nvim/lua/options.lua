@@ -42,6 +42,21 @@ opt('o', 'signcolumn', 'yes:1')
 opt('o', 'synmaxcol', 200)                           -- syntax file is slow,
 opt('o', 'foldlevelstart', 99)                       -- no fold closed
 
+if vim.fn.has("wsl") == 1 then
+  vim.g.clipboard = {
+    name = "wsl-clipboard",
+    copy = {
+      ["+"] = "clip.exe",
+      ["*"] = "clip.exe",
+    },
+    paste = {
+      ["+"] = [[powershell.exe -NoProfile -Command Get-Clipboard]],
+      ["*"] = [[powershell.exe -NoProfile -Command Get-Clipboard]],
+    },
+    cache_enabled = false,
+  }
+end
+
 vim.g.rustaceanvim = {
   -- LSP configuration
   server = {
