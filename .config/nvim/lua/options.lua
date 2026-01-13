@@ -41,3 +41,18 @@ opt('o', 'lazyredraw', true)
 opt('o', 'signcolumn', 'yes:1')
 opt('o', 'synmaxcol', 200)                           -- syntax file is slow,
 opt('o', 'foldlevelstart', 99)                       -- no fold closed
+
+vim.g.rustaceanvim = {
+  -- LSP configuration
+  server = {
+    on_attach = function(client, bufnr)
+      if client:supports_method "textDocument/formatting" then
+        -- Format the current buffer on save
+        vim.api.nvim_create_autocmd("BufWritePre", {
+          buffer = bufnr,
+          callback = function() vim.lsp.buf.format { bufnr = bufnr, id = client.id } end,
+        })
+      end
+    end,
+  },
+}

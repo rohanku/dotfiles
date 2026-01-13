@@ -21,36 +21,16 @@ return require('lazy').setup({
   'tpope/vim-repeat',
   'tpope/vim-surround',
 
-  -- quotes as a textobj
-  'preservim/vim-textobj-quote',
--- git wrapper
-  'tpope/vim-fugitive',
-
   -- fuzzy finder
   { "junegunn/fzf", build = "./install --bin" },
-
-  -- language servers
-  { -- automatically download lang servers
-    'williamboman/mason.nvim',
-    config = function()
-      require('mason').setup()
-    end
-  },
 
   { -- configure lang servers
     'neovim/nvim-lspconfig',
     dependencies = {
-      -- automatic language server installation
-      { 'williamboman/mason-lspconfig.nvim',
-        dependencies = {
-          -- packer won't install dependencies of this for some reason
-          'williamboman/mason.nvim',
-        },
-        config = function()
-          require("mason-lspconfig").setup {
-              ensure_installed = { "pyright", "rust_analyzer" },
-          }
-        end
+      {
+        'mrcjkb/rustaceanvim',
+        version = '^5', -- Recommended
+        lazy = false, -- This plugin is already lazy
       },
       -- autocomplete
       { 'hrsh7th/nvim-cmp',
@@ -74,6 +54,7 @@ return require('lazy').setup({
                 -- vim.fn["UltiSnips#Anon"](args.body) -- For `ultisnips` users.
               end,
             },
+            preselect = cmp.PreselectMode.None,
             completion = {
               completeopt = 'menu,menuone,noinsert,noselect'
             },
@@ -87,7 +68,8 @@ return require('lazy').setup({
               ['<C-Space>'] = cmp.mapping.complete(),
               ['<C-e>'] = cmp.mapping.abort(),
               ['<Tab>'] = cmp.mapping.select_next_item(),
-              ['<CR>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+              ['<S-Tab>'] = cmp.mapping.select_prev_item(),
+              ['<CR>'] = cmp.mapping.confirm({ select = false }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
             }),
             sources = cmp.config.sources({
               { name = 'nvim_lsp' },
@@ -123,83 +105,8 @@ return require('lazy').setup({
             })
           })
         end,
-      },
-      {
-        'simrat39/rust-tools.nvim',
-        config = function()
-          require("rust-tools").setup(
-            {
-              tools = {
-                runnables = {
-                  use_telescope = true,
-                },
-                inlay_hints = {
-                  auto = true,
-                  show_parameter_hints = false,
-                  parameter_hints_prefix = "",
-                  other_hints_prefix = "",
-                },
-              },
-
-              -- all the opts to send to nvim-lspconfig
-              -- these override the defaults set by rust-tools.nvim
-              -- see https://github.com/neovim/nvim-lspconfig/blob/master/CONFIG.md#rust_analyzer
-              server = {
-                -- on_attach is a callback called when the language server attachs to the buffer
-                on_attach = function(client, buffer)
-                end,
-                cmd = {'rustup', 'run', 'stable', 'rust-analyzer'},
-                settings = {
-                  -- to enable rust-analyzer settings visit:
-                  -- https://github.com/rust-analyzer/rust-analyzer/blob/master/docs/user/generated_config.adoc
-                  ["rust-analyzer"] = {
-                    -- enable clippy on save
-                    checkOnSave = {
-                      command = "clippy",
-                    },
-                  },
-                },
-              },
-            }
-          )
-        end
       }
     },
-
-    config = function()
-      local capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities())
-      do
-        local config = vim.tbl_deep_extend('force',
-          require('metals').bare_config(),
-          { capabilities = capabilities }
-        )
-        local augrp = vim.api.nvim_create_augroup('cfg-lsp-metals', { clear = true })
-        vim.api.nvim_create_autocmd('FileType', {
-          pattern = { 'scala', 'sbt' },
-          callback = function()
-            vim.opt_local.shortmess:remove('F')
-            require('metals').initialize_or_attach(config)
-          end,
-          group = augrp,
-        })
-      end
-      require("mason-lspconfig").setup_handlers {
-        function(server_name) -- default handler
-          require('lspconfig')[server_name].setup {
-            capabilities = capabilities
-          }
-        end,
-      }
-    end,
-  },
-  -- format on save
-  {
-    "rust-lang/rust.vim",
-    ft = "rust",
-    init = function ()
-      vim.wo.signcolumn = "yes"
-      vim.g.rustfmt_autosave = 1
-    end
   },
   -- visualize lsp progress
   {
@@ -267,30 +174,6 @@ return require('lazy').setup({
         },
       }
     end
-  },
-
-  -- LaTeX
-  'lervag/vimtex',
-
-  -- null-ls
-  {
-    'jose-elias-alvarez/null-ls.nvim',
-    dependencies = { { 'nvim-lua/plenary.nvim' } },
-    config = function()
-      require("null-ls").setup({
-        sources = {
-          -- require("null-ls").builtins.diagnostics.vale,
-          require("null-ls").builtins.formatting.black,
-          require("null-ls").builtins.formatting.isort,
-        },
-      })
-    end,
-  },
-
-  -- scala does its own thing for some reason
-  {
-    'scalameta/nvim-metals',
-    dependencies = { "nvim-lua/plenary.nvim" }
   },
 })
 
